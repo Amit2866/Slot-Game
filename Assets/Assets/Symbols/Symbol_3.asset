@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56813ffc07136fe419c7d1d7193e2340, type: 3}
-  m_Name: Sym_Cherry
+  m_Script: {fileID: 11500000, guid: c98deaa86985a3046995fae7a7c91da6, type: 3}
+  m_Name: Symbol_3
   m_EditorClassIdentifier: Assembly-CSharp::SlotGame.Data.SymbolData
-  symbolID: Sym_Cherry
-  symbolIcon: {fileID: 21300000, guid: 6891ab353f8518d4cbf79a05aab82e14, type: 3}
-  payoutMultiplier: 5
+  id: 3
+  icon: {fileID: 21300000, guid: 8c09afe7f07b8a749b5f4c5dcb0c48b5, type: 3}
+  payoutMultiplier: 1
+  isWild: 0
