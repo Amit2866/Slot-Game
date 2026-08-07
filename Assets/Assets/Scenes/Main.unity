@@ -1587,7 +1587,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 266577897}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: CloseBetPanel
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

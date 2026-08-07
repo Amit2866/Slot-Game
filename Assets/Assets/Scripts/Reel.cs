@@ -22,12 +22,15 @@ public class Reel : MonoBehaviour
     public bool IsSpinning { get; private set; }
     public SymbolData FinalSymbol { get; private set; }
 
+    // Caches the RectTransform and its original layout position for the animation math to reference later.
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
         _startPosition = _rectTransform.anchoredPosition;
     }
 
+    // Acts as the entry point for spinning. Predetermines the winning symbol immediately upon starting, 
+    // so the visual spinning is just an illusion catching up to the generated result.
     public void StartSpin(float duration)
     {
         if (!IsSpinning && symbolPool != null && symbolPool.Count > 0)
@@ -37,6 +40,10 @@ public class Reel : MonoBehaviour
         }
     }
 
+    // Core animation loop for the reel. 
+    // Part 1: Moves the reel downwards based on time and speed, snapping it back up to create an infinite loop effect.
+    // Part 2: Injects the pre-calculated 'FinalSymbol' into the center slot right before stopping.
+    // Part 3: Applies a mathematical lerp to create an elastic overshoot "bounce" effect when settling into place.
     private IEnumerator SmoothSpinRoutine(float duration)
     {
         IsSpinning = true;
@@ -63,7 +70,6 @@ public class Reel : MonoBehaviour
             displaySlots[1].sprite = FinalSymbol.icon;
         }
 
-        // Bounce overshoot effect
         float bounceDuration = 0.12f;
         float bounceElapsed = 0f;
         float startBounceY = _rectTransform.anchoredPosition.y;
@@ -88,6 +94,8 @@ public class Reel : MonoBehaviour
         IsSpinning = false;
     }
 
+    // Visually shifts the sprites down the array list (top to bottom) as the reel physically moves down.
+    // Pulls a random sprite from the pool for the newly exposed top slot to maintain the infinite scrolling illusion.
     private void CycleSymbols()
     {
         for (int i = displaySlots.Length - 1; i > 0; i--)

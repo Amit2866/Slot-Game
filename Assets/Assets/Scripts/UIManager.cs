@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public int currentBet = 10;
     public int minBet = 10;
 
+    // FEATURE: Initial Game State Auto-Popup
     private void Start()
     {
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
@@ -74,6 +75,7 @@ public class UIManager : MonoBehaviour
         CloseBetPanel();
     }
 
+    // FEATURE: Transaction Validation & Bet Locking
     public bool TryDeductBet()
     {
         if (playerBalance >= currentBet)
@@ -99,6 +101,7 @@ public class UIManager : MonoBehaviour
         return false;
     }
 
+    // FEATURE: Post-Spin Workflow 
     public void ShowResult(bool won, int winAmount)
     {
         if (won)
@@ -123,6 +126,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // FEATURE:  Game Over State Handler
     private void CheckOutOfGold()
     {
         if (statusText != null) statusText.text = "OUT OF GOLD! RESTART TO PLAY";
@@ -143,9 +147,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // FEATURE: WebGL-Safe Asynchronous Scene Reloading
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Using Async prevents the single-threaded WebGL player from freezing during reloads
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
+    
 }

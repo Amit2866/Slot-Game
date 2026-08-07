@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private bool _isSpinning = false;
     public bool CanSpin => !_isSpinning;
 
+    // Checks if the machine is already active. If not, it pings the UIManager to pay for the spin.
+    // Only starts the mechanical sequence if the transaction is successful.
     public void TrySpin()
     {
         if (_isSpinning) return;
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Polls the New Input System every frame to allow spinning via a keyboard hotkey (G).
     private void Update()
     {
         if (Keyboard.current != null && Keyboard.current.gKey.wasPressedThisFrame && CanSpin)
@@ -32,6 +35,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Orchestrates the physical reel spinning.
+    // Assigns incrementally longer spin durations to each reel to create a staggered, dramatic stopping effect.
+    // Uses a polling loop to wait until all reels have completely stopped before checking for a win.
     private IEnumerator RunSpinSequence()
     {
         _isSpinning = true;
@@ -53,12 +59,14 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        // Set spinning state false before win check so UI opens cleanly
         _isSpinning = false;
 
         CheckWinCondition();
     }
 
+    // Evaluates the final outcome after all reels rest.
+    // Because we use ScriptableObjects, we can verify a win by simply checking if the objects in memory match,
+    // rather than doing slow string or tag comparisons. Grabs the specific multiplier from the winning object.
     private void CheckWinCondition()
     {
         if (reels.Length < 3) return;
