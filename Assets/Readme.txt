@@ -10,7 +10,7 @@ ScriptableObject Symbols: Decoupled symbol assets (SymbolData) that allow easy c
 
 Interactive Bet Panel: Automatically opens at game launch, locks and hides during spins, and re-opens as soon as reels finish stopping.
 
-Dynamic Economy & Balance Tracking: Players start with 1000 Gold and can choose between different bet increments.
+Dynamic Economy & Balance Tracking: Players start with 200 Gold and can choose between different bet increments.
 
 Out-of-Gold & Restart System: Automatically detects when a player's balance drops below the minimum required bet, triggering a dedicated restart screen and WebGL session reset handler.
 
