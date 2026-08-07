@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class SlotSymbol
-{
-    public string symbolId;
-    public Sprite icon;
-}
-
 public class Reel : MonoBehaviour
 {
     [Header("UI References")]
@@ -21,13 +14,13 @@ public class Reel : MonoBehaviour
     [SerializeField] private float symbolHeight = 96f;
 
     [Header("Symbol Pool")]
-    [SerializeField] private List<SlotSymbol> symbolPool;
+    [SerializeField] private List<SymbolData> symbolPool;
 
     private RectTransform _rectTransform;
     private Vector2 _startPosition;
 
     public bool IsSpinning { get; private set; }
-    public SlotSymbol FinalSymbol { get; private set; }
+    public SymbolData FinalSymbol { get; private set; }
 
     private void Awake()
     {
@@ -37,7 +30,7 @@ public class Reel : MonoBehaviour
 
     public void StartSpin(float duration)
     {
-        if (!IsSpinning)
+        if (!IsSpinning && symbolPool != null && symbolPool.Count > 0)
         {
             FinalSymbol = symbolPool[Random.Range(0, symbolPool.Count)];
             StartCoroutine(SmoothSpinRoutine(duration));
@@ -70,8 +63,8 @@ public class Reel : MonoBehaviour
             displaySlots[1].sprite = FinalSymbol.icon;
         }
 
-        // Bounce effect
-        float bounceDuration = 0.15f;
+        // Bounce overshoot effect
+        float bounceDuration = 0.12f;
         float bounceElapsed = 0f;
         float startBounceY = _rectTransform.anchoredPosition.y;
         float overshootY = _startPosition.y - bounceOvershoot;
